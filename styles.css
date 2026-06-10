@@ -204,16 +204,14 @@ ul { list-style: none; }
 }
 
 /* ===================== ЛОГОТИП FD (каллиграфия, рисуется) ===================== */
-.fd {
-  width: 86%;
-  max-width: 360px;
-  height: auto;
-  overflow: visible;
-  --fd-glow: 120, 180, 255;     /* цвет свечения (RGB) — поменяй при желании */
+.fd { width: 86%; max-width: 360px; height: auto; overflow: visible; }
+.fd--big {
+  width: 100%;
+  max-width: 600px;
   cursor: pointer;
-  transition: filter 0.4s ease;
+  transform-origin: center;
+  transition: transform 0.55s var(--ease);
 }
-.fd--big { width: 92%; max-width: 440px; }
 .fd__t {
   font-family: "Great Vibes", cursive;
   font-size: 200px;
@@ -225,25 +223,39 @@ ul { list-style: none; }
   stroke-dasharray: 1500;
   stroke-dashoffset: 1500;
 }
-/* Свечение при наведении: статический ореол (работает всегда) + пульсация поверх */
-.fd:hover {
-  filter: drop-shadow(0 0 6px rgba(var(--fd-glow), 0.9))
-          drop-shadow(0 0 20px rgba(var(--fd-glow), 0.6));
-  animation: fdGlow 1.8s ease-in-out infinite;
+
+/* Белый «свет», бегущий по контуру букв — виден только при наведении (как ∞) */
+.fd__trace {
+  font-family: "Great Vibes", cursive;
+  font-size: 200px;
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  stroke-dasharray: 240 1500;   /* светящийся сегмент 240 + длинный разрыв */
+  stroke-dashoffset: 1740;      /* 240 + 1500 → бесшовный цикл */
+  opacity: 0;
+  pointer-events: none;
+  /* тёмный ореол, чтобы белый свет читался и на чёрных буквах, и на белом фоне */
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.55));
 }
-@keyframes fdGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px rgba(var(--fd-glow), 0.75))
-            drop-shadow(0 0 14px rgba(var(--fd-glow), 0.45));
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgba(var(--fd-glow), 1))
-            drop-shadow(0 0 30px rgba(var(--fd-glow), 0.7));
-  }
+/* При наведении: лого увеличивается, белый свет плавно бежит по буквам */
+.fd--big:hover { transform: scale(1.12); }
+.fd--big:hover .fd__trace {
+  opacity: 1;
+  animation: fdTrace 2.6s linear infinite;
 }
-/* сначала рисуется F, затем D */
-.fd__f { animation: fdStroke 1.6s var(--ease) 0.2s forwards, fdFill 0.9s ease 1.7s forwards; }
-.fd__d { animation: fdStroke 1.6s var(--ease) 1.7s forwards, fdFill 0.9s ease 3.2s forwards; }
+.fd--big:hover .fd__trace--d { animation-delay: 1.3s; }  /* F, затем D — непрерывный поток */
+@keyframes fdTrace {
+  from { stroke-dashoffset: 1740; }
+  to   { stroke-dashoffset: 0; }
+}
+/* Пишется как от руки: перо ведёт от края F до конца D — одной непрерывной линией.
+   D стартует ровно в момент, когда дорисовался F, а заливка-«чернила» догоняет перо. */
+.fd__f { animation: fdStroke 1.8s ease-in-out 0.3s forwards, fdFill 0.55s ease 1.85s forwards; }
+.fd__d { animation: fdStroke 1.8s ease-in-out 2.1s forwards, fdFill 0.55s ease 3.65s forwards; }
 @keyframes fdStroke { to { stroke-dashoffset: 0; } }
 @keyframes fdFill { to { fill-opacity: 1; } }
 .intro__caption {
@@ -346,26 +358,6 @@ body.intro-lock { overflow: hidden; height: 100vh; }
   justify-content: space-between;
 }
 
-/* полупрозрачные надписи на фоне */
-.hero__ghosts { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-.ghost {
-  position: absolute;
-  font-family: "Anton", sans-serif;
-  text-transform: uppercase;
-  color: rgba(10, 10, 10, 0.04);
-  white-space: nowrap;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  user-select: none;
-}
-.ghost--1 { top: 4%;  left: 26%; font-size: clamp(4rem, 11vw, 11rem); transform: rotate(-4deg); }
-.ghost--2 { top: 34%; left: 48%; font-size: clamp(2rem, 5vw, 4rem); color: rgba(10,10,10,0.05); transform: rotate(6deg); }
-.ghost--3 { top: 58%; left: 14%; font-size: clamp(3rem, 8vw, 8rem); color: rgba(10,10,10,0.035); }
-.ghost--4 { top: 70%; left: 55%; font-size: clamp(2.5rem, 6vw, 5rem); transform: rotate(-8deg); }
-.ghost--5 { top: 12%; left: 60%; font-size: clamp(2.5rem, 6vw, 6rem); color: rgba(10,10,10,0.03); transform: rotate(3deg); }
-.ghost--6 { top: 46%; left: 4%;  font-size: clamp(2rem, 5vw, 4.5rem); color: rgba(10,10,10,0.05); transform: rotate(-3deg); }
-.ghost--7 { top: 84%; left: 32%; font-size: clamp(2.5rem, 7vw, 7rem); color: rgba(10,10,10,0.03); transform: rotate(4deg); }
-
 /* контент над фоном */
 .hero__grid, .hero__bar { position: relative; z-index: 1; }
 
@@ -392,10 +384,18 @@ body.intro-lock { overflow: hidden; height: 100vh; }
 .hero__title span:nth-child(2) { margin-left: 0.6em; margin-top: -0.12em; }
 .hero__title span:nth-child(3) { margin-left: 0.2em; margin-top: -0.12em; letter-spacing: -0.02em; }
 
-.hero__lead { max-width: 40ch; color: #333; margin: 1.6rem 0; font-size: 16.5px; line-height: 1.6; }
+.hero__lead { max-width: 44ch; color: #333; margin: 1.8rem 0; font-size: 19px; line-height: 1.65; }
 
-.hero__about { max-width: 38ch; }
-.hero__about p { color: #555; font-size: 15px; margin-bottom: 1.2rem; line-height: 1.6; }
+/* Кнопка «Начать» в hero — крупнее обычных */
+.hero__col--left .btn {
+  font-size: 17px;
+  padding: 1rem 1rem 1rem 2rem;
+  gap: 1rem;
+}
+.hero__col--left .btn__arrow { width: 38px; height: 38px; font-size: 16px; }
+
+.hero__about { max-width: 42ch; }
+.hero__about p { color: #555; font-size: 17px; margin-bottom: 1.2rem; line-height: 1.65; }
 .hero__social { display: flex; gap: 0.6rem; }
 .ico {
   display: grid; place-items: center;
@@ -414,15 +414,15 @@ body.intro-lock { overflow: hidden; height: 100vh; }
   min-height: 50vh;
 }
 
-.hero__block { max-width: 34ch; }
+.hero__block { max-width: 38ch; }
 .hero__sub {
   font-family: "Anton", sans-serif;
   text-transform: uppercase;
-  font-size: clamp(1.9rem, 3.1vw, 2.9rem);
+  font-size: clamp(2.2rem, 3.6vw, 3.4rem);
   line-height: 0.92;
   margin-bottom: 1rem;
 }
-.hero__block p { color: #555; font-size: 16px; line-height: 1.6; }
+.hero__block p { color: #555; font-size: 18px; line-height: 1.65; }
 
 /* нижняя лента */
 .hero__bar {
