@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FREECODE — Портфолио</title>
+  <meta name="description" content="FREECODE — веб-разработчик. Делаю сайты и ботов для бизнеса." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="FREECODE — Портфолио" />
+  <meta property="og:description" content="Веб-разработчик. Сайты, боты, автоматизация." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts: Anton (заголовки) + Inter (текст) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- SVG-спрайт: плейсхолдер видео-бокса (виден, пока не подключено видео) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="vidph" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet">
+      <circle cx="60" cy="52" r="24" fill="none" stroke="currentColor" stroke-width="2" />
+      <path d="M53 42 L73 52 L53 62 Z" fill="currentColor" />
+      <text x="60" y="96" text-anchor="middle" font-size="8" letter-spacing="3"
+            fill="currentColor" font-family="Inter, sans-serif">ВИДЕО</text>
+    </symbol>
+  </svg>
+
+  <!-- ===================== INTRO / ЗАСТАВКА ===================== -->
+  <div class="intro" id="intro">
+    <div class="intro__stage">
+      <!-- Каллиграфия FD рисуется ручкой: сначала F, потом D -->
+      <svg class="fd" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" aria-label="FREECODE">
+        <text class="fd__t fd__f" x="150" y="172" text-anchor="middle">F</text>
+        <text class="fd__t fd__d" x="262" y="172" text-anchor="middle">D</text>
+      </svg>
+    </div>
+    <p class="intro__caption" id="introCaption">ещё один сайт для ещё одного моего проекта</p>
+    <button class="intro__skip" id="introSkip">Пропустить →</button>
+  </div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="#hero" class="nav__logo">FREECODE<span>©</span></a>
+
+      <nav class="nav__menu" id="navMenu">
+        <a href="#work">Работы</a>
+        <a href="#about">Обо мне</a>
+        <a href="#services">Услуги</a>
+      </nav>
+
+      <a href="#contact" class="btn btn--small">
+        Связаться
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </a>
+
+      <button class="nav__burger" id="navBurger" aria-label="Меню">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero section--light" id="hero">
+      <!-- Полупрозрачные надписи на фоне -->
+      <div class="hero__ghosts" aria-hidden="true">
+        <span class="ghost ghost--1">FREECODE</span>
+        <span class="ghost ghost--2">freecode</span>
+        <span class="ghost ghost--3">FREECODE</span>
+        <span class="ghost ghost--4">freecode</span>
+        <span class="ghost ghost--5">FREECODE</span>
+        <span class="ghost ghost--6">freecode</span>
+        <span class="ghost ghost--7">FREECODE</span>
+      </div>
+
+      <div class="hero__grid">
+
+        <!-- Левая колонка -->
+        <div class="hero__col hero__col--left">
+          <div class="reveal">
+            <h1 class="hero__title">
+              <span>ДЕЛАЮ</span>
+              <span>ЦИФРОВЫЕ</span>
+              <span>ПРОДУКТЫ</span>
+            </h1>
+            <p class="hero__lead">
+              FREECODE — новая студия одного человека. Сайты, боты
+              и автоматизация для тех, кому нужен результат, а не отписка.
+            </p>
+            <a href="#contact" class="btn">
+              Начать
+              <span class="btn__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+
+          <div class="hero__about reveal">
+            <p>
+              Один разработчик. Один фокус. FREECODE — чтобы доказать,
+              что сильный продукт не требует большой студии, нужен только
+              правильный подход.
+            </p>
+            <div class="hero__social">
+              <a href="https://t.me/pidya" aria-label="Telegram" class="ico">TG</a>
+              <a href="mailto:freecode.kredit@gmail.com" aria-label="Email" class="ico">@</a>
+              <a href="https://t.me/myvfxworks" target="_blank" rel="noopener" aria-label="Канал с работами" class="ico">W</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Центр: ч/б изображение / видео -->
+        <div class="hero__col hero__col--center reveal">
+          <div class="hero__figure">
+            <svg class="fd fd--big" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" aria-label="FREECODE">
+              <text class="fd__t fd__f" x="150" y="172" text-anchor="middle">F</text>
+              <text class="fd__t fd__d" x="262" y="172" text-anchor="middle">D</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Правая колонка -->
+        <div class="hero__col hero__col--right">
+          <div class="hero__block reveal">
+            <h2 class="hero__sub">СМЕЛО С<br />ПЕРВОГО ДНЯ</h2>
+            <p>
+              FREECODE не терпит «средненько». Делаю чистые, чёткие
+              решения, которые работают и приносят деньги.
+            </p>
+          </div>
+          <div class="hero__block reveal">
+            <h2 class="hero__sub">БЕЗ ГРАНИЦ<br />В ЗАДАЧАХ</h2>
+            <p>
+              Вёрстка, боты, автоматизация, интеграции, запуск под ключ.
+              Если это про цифру и про результат — я в деле.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Нижняя лента -->
+      <div class="hero__bar reveal">
+        <span class="bar__item"><i>●</i> FREECODE</span>
+        <span class="bar__item"><i>○</i> Вёрстка</span>
+        <span class="bar__item"><i>❚❚</i> Боты</span>
+        <span class="bar__item"><i>❚❚</i> Автоматизация</span>
+        <span class="bar__item"><i>●●</i> Интеграции</span>
+        <span class="bar__item"><i>//</i> Запуск</span>
+      </div>
+    </section>
+
+    <!-- ===================== MARQUEE ===================== -->
+    <section class="marquee section--dark" aria-hidden="true">
+      <div class="marquee__track">
+        <span>ВЁРСТКА · БОТЫ · АВТОМАТИЗАЦИЯ · ИНТЕГРАЦИИ · ДИЗАЙН · SEO · ЛЕНДИНГИ · </span>
+        <span>ВЁРСТКА · БОТЫ · АВТОМАТИЗАЦИЯ · ИНТЕГРАЦИИ · ДИЗАЙН · SEO · ЛЕНДИНГИ · </span>
+      </div>
+    </section>
+
+    <!-- ===================== WORK ===================== -->
+    <section class="work section section--light" id="work">
+      <div class="work__head reveal">
+        <p class="label">Избранные проекты</p>
+        <h2 class="section__title reveal-loop">
+          WORK THAT<br />EARNS ITS PLACE
+        </h2>
+
+        <div class="chips" id="chips">
+          <button class="chip chip--active" data-filter="all">Все</button>
+          <button class="chip" data-filter="service">Сервисы</button>
+          <button class="chip" data-filter="site">Сайты</button>
+        </div>
+      </div>
+
+      <div class="grid" id="workGrid">
+        <!-- CryptoPay — приём оплаты криптой на любом сайте -->
+        <a href="#" class="card reveal" data-cat="service">
+          <div class="media media--card">
+            <svg class="vidph"><use href="#vidph" /></svg>
+            <video class="vid" muted loop playsinline preload="metadata">
+              <source src="assets/cryptopay.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card__meta">
+            <h3 class="card__title">CryptoPay</h3>
+            <span class="card__tag">Приём оплаты криптой</span>
+          </div>
+        </a>
+
+        <!-- TrainMail — почтовый сервис -->
+        <a href="https://trainmail.online" target="_blank" rel="noopener" class="card reveal" data-cat="service">
+          <div class="media media--card">
+            <svg class="vidph"><use href="#vidph" /></svg>
+            <video class="vid" muted loop playsinline preload="metadata">
+              <source src="assets/trainmail.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card__meta">
+            <h3 class="card__title">TrainMail</h3>
+            <span class="card__tag">Почтовый сервис · trainmail.online</span>
+          </div>
+        </a>
+
+        <!-- DinoStory -->
+        <a href="#" class="card reveal" data-cat="site">
+          <div class="media media--card">
+            <svg class="vidph"><use href="#vidph" /></svg>
+            <video class="vid" muted loop playsinline preload="metadata">
+              <source src="assets/dinostory.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card__meta">
+            <h3 class="card__title">DinoStory</h3>
+            <span class="card__tag">Веб-проект</span>
+          </div>
+        </a>
+
+        <!-- Fanmade -->
+        <a href="#" class="card reveal" data-cat="site">
+          <div class="media media--card">
+            <svg class="vidph"><use href="#vidph" /></svg>
+            <video class="vid" muted loop playsinline preload="metadata">
+              <source src="assets/fanmade.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="card__meta">
+            <h3 class="card__title">Fanmade</h3>
+            <span class="card__tag">Веб-проект</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="work__more reveal">
+        <a href="https://t.me/myvfxworks" target="_blank" rel="noopener" class="btn">
+          Все работы в Telegram
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== ABOUT (dark) ===================== -->
+    <section class="about section section--dark" id="about">
+      <div class="about__grid">
+        <!-- Левая колонка: текст -->
+        <div class="about__left reveal">
+          <p class="label label--invert">Обо мне</p>
+          <h2 class="section__title reveal-loop">
+            КОД, КОТОРЫЙ<br />РАБОТАЕТ
+          </h2>
+          <div class="about__text">
+            <p>
+              FREECODE - фронтенд- и бэкенд-разработчик. В разработке больше
+              5 лет: начинал с простых сайтов и скриптов, сегодня делаю
+              полноценные продукты под ключ - от первой строчки кода
+              до запуска.
+            </p>
+            <p>
+              Работаю на обеих сторонах: собираю интерфейсы, которые приятно
+              открывать, и пишу серверную логику, которая не падает под
+              нагрузкой. Отдельная специализация — Telegram-боты: приём
+              заказов, записи клиентов, оплата, рассылки, интеграции
+              с таблицами и CRM. Если процесс можно автоматизировать -
+              я соберу для него бота.
+            </p>
+            <p>
+              Не люблю раздутые сроки и мутные сметы. Формат простой:
+              вы описываете задачу - я называю срок и цену - вы получаете
+              работающий продукт. Все проекты сопровождаю после сдачи:
+              если что-то сломалось или нужно доработать, я на связи.
+            </p>
+          </div>
+          <p class="about__stack">
+            <span>Стек</span> HTML/CSS/JS, React, Python, Node.js,
+            Telegram Bot API, базы данных, деплой и настройка серверов.
+          </p>
+          <div class="chips chips--invert">
+            <span class="chip">Frontend</span>
+            <span class="chip">Backend</span>
+            <span class="chip">Telegram-боты</span>
+            <span class="chip">Автоматизация</span>
+            <span class="chip">Сайты под ключ</span>
+          </div>
+        </div>
+
+        <!-- Правая колонка: видео -->
+        <div class="about__right reveal">
+          <div class="media about__media">
+            <svg class="vidph"><use href="#vidph" /></svg>
+            <video class="vid" muted loop playsinline autoplay preload="auto">
+              <source src="assets/kenly.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+
+      <!-- Полупрозрачный водяной знак -->
+      <div class="about__watermark" aria-hidden="true">#FREECODE</div>
+
+      <!-- Цифры + кнопка -->
+      <div class="about__foot reveal">
+        <ul class="about__stats">
+          <li><strong>5+</strong><span>лет опыта</span></li>
+          <li><strong>2</strong><span>стека: фронт + бэк</span></li>
+          <li><strong>∞</strong><span>ботов любой сложности</span></li>
+        </ul>
+        <a href="#contact" class="btn btn--invert">
+          Обсудить проект
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section class="services section section--light" id="services">
+      <div class="services__head reveal">
+        <p class="label">Что я делаю</p>
+        <h2 class="section__title reveal-loop">УСЛУГИ<br />И ЦЕНЫ</h2>
+      </div>
+
+      <ul class="services__list">
+        <li class="srv reveal">
+          <div class="srv__top">
+            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
+                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="2" />
+              <path d="M3 8h18" />
+              <path d="M6 6h.01M8.5 6h.01" />
+            </svg>
+            <span class="srv__num">01</span>
+          </div>
+          <h3 class="srv__name">Сайты и лендинги</h3>
+          <p class="srv__desc">Адаптивная вёрстка, скорость, чистый код</p>
+          <span class="srv__price">от 25 000 ₽</span>
+        </li>
+
+        <li class="srv reveal">
+          <div class="srv__top">
+            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
+                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="8" width="16" height="11" rx="2.5" />
+              <path d="M12 8V4" />
+              <circle cx="12" cy="3" r="1" />
+              <path d="M9 13h.01M15 13h.01" />
+            </svg>
+            <span class="srv__num">02</span>
+          </div>
+          <h3 class="srv__name">Телеграм-боты</h3>
+          <p class="srv__desc">Приём заявок, оплаты, рассылки, CRM</p>
+          <span class="srv__price">от 20 000 ₽</span>
+        </li>
+
+        <li class="srv reveal">
+          <div class="srv__top">
+            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
+                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+            </svg>
+            <span class="srv__num">03</span>
+          </div>
+          <h3 class="srv__name">Автоматизация</h3>
+          <p class="srv__desc">Интеграции, парсеры, отчёты, API</p>
+          <span class="srv__price">от 15 000 ₽</span>
+        </li>
+
+        <li class="srv reveal">
+          <div class="srv__top">
+            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
+                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12a8 8 0 0 1 13-6.2" />
+              <path d="M18 4v3h-3" />
+              <path d="M20 12a8 8 0 0 1-13 6.2" />
+              <path d="M6 20v-3h3" />
+            </svg>
+            <span class="srv__num">04</span>
+          </div>
+          <h3 class="srv__name">Поддержка</h3>
+          <p class="srv__desc">Доработки, хостинг, обновления</p>
+          <span class="srv__price">от 5 000 ₽/мес</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ===================== FOOTER / CONTACT (dark) ===================== -->
+    <footer class="footer section--dark" id="contact">
+      <div class="footer__inner">
+        <p class="label label--invert reveal">Свяжитесь со мной</p>
+        <h2 class="footer__title reveal-loop">ДАВАЙ<br />РАБОТАТЬ</h2>
+
+        <div class="footer__row reveal">
+          <a href="https://t.me/pidya" class="btn btn--invert">
+            Telegram
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="mailto:freecode.kredit@gmail.com" class="btn btn--invert">
+            Email
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="footer__bottom">
+          <div class="footer__contacts">
+            <a href="mailto:freecode.kredit@gmail.com">freecode.kredit@gmail.com</a>
+            <a href="https://t.me/pidya">@pidya</a>
+            <a href="https://t.me/myvfxworks" target="_blank" rel="noopener">@myvfxworks · работы</a>
+          </div>
+          <div class="footer__social">
+            <a href="https://t.me/pidya">TG</a>
+            <a href="https://t.me/myvfxworks" target="_blank" rel="noopener">Works</a>
+          </div>
+        </div>
+
+        <p class="footer__copy">© 2026 FREECODE. Все права защищены.</p>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ===================== ЛАЙТБОКС: видео почти на весь экран ===================== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox__frame">
+      <button class="lightbox__close" id="lightboxClose" aria-label="Закрыть">✕</button>
+      <video class="lightbox__video" id="lightboxVideo" loop muted playsinline></video>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
