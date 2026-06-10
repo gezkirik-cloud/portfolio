@@ -124,13 +124,39 @@ window.addEventListener("scroll", () => {
   lastY = y;
 });
 
-// ===================== AUTOPLAY CARD VIDEOS ON HOVER =====================
-// Видео в карточках играют при наведении и ставятся на паузу при уходе.
-document.querySelectorAll(".card video").forEach((video) => {
-  const card = video.closest(".card");
-  card.addEventListener("mouseenter", () => video.play().catch(() => {}));
-  card.addEventListener("mouseleave", () => video.pause());
-});
+// ===================== AUTOPLAY CARD VIDEOS =====================
+// На десктопе (есть курсор) — играем при наведении.
+// На тач-устройствах наведения нет, поэтому видео автозапускаются,
+// когда попадают в зону видимости (muted + playsinline → iOS разрешает).
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const cardVideos = document.querySelectorAll(".card video");
+
+if (canHover) {
+  cardVideos.forEach((video) => {
+    const card = video.closest(".card");
+    card.addEventListener("mouseenter", () => video.play().catch(() => {}));
+    card.addEventListener("mouseleave", () => video.pause());
+  });
+} else {
+  const cardVidIO = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          if (video.preload !== "auto") {
+            video.preload = "auto";
+            video.load();
+          }
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+  cardVideos.forEach((video) => cardVidIO.observe(video));
+}
 
 // ===================== LIGHTBOX: видео почти на весь экран при долгом наведении =====================
 (function lightbox() {
