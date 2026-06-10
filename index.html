@@ -1,433 +1,751 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FREECODE — Портфолио</title>
-  <meta name="description" content="FREECODE — веб-разработчик. Делаю сайты и ботов для бизнеса." />
+/* ===================== RESET / TOKENS ===================== */
+:root {
+  --black: #0A0A0A;
+  --white: #FAFAFA;
+  --gray: #888888;
+  --line: rgba(10, 10, 10, 0.12);
+  --line-invert: rgba(250, 250, 250, 0.15);
+  --pad: clamp(1.25rem, 5vw, 6rem);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="FREECODE — Портфолио" />
-  <meta property="og:description" content="Веб-разработчик. Сайты, боты, автоматизация." />
-  <meta property="og:type" content="website" />
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <!-- Fonts: Anton (заголовки) + Inter (текст) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
+body {
+  font-family: "Inter", system-ui, sans-serif;
+  background: var(--white);
+  color: var(--black);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-  <!-- SVG-спрайт: плейсхолдер видео-бокса (виден, пока не подключено видео) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="vidph" viewBox="0 0 120 120" preserveAspectRatio="xMidYMid meet">
-      <circle cx="60" cy="52" r="24" fill="none" stroke="currentColor" stroke-width="2" />
-      <path d="M53 42 L73 52 L53 62 Z" fill="currentColor" />
-      <text x="60" y="96" text-anchor="middle" font-size="8" letter-spacing="3"
-            fill="currentColor" font-family="Inter, sans-serif">ВИДЕО</text>
-    </symbol>
-  </svg>
+img, video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.02);
+}
 
-  <!-- ===================== INTRO / ЗАСТАВКА ===================== -->
-  <div class="intro" id="intro">
-    <div class="intro__stage">
-      <!-- Каллиграфия FD рисуется ручкой: сначала F, потом D -->
-      <svg class="fd" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" aria-label="FREECODE">
-        <text class="fd__t fd__f" x="150" y="172" text-anchor="middle">F</text>
-        <text class="fd__t fd__d" x="262" y="172" text-anchor="middle">D</text>
-      </svg>
-    </div>
-    <p class="intro__caption" id="introCaption">ещё один сайт для ещё одного моего проекта</p>
-    <button class="intro__skip" id="introSkip">Пропустить →</button>
-  </div>
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
 
-  <!-- ===================== NAVBAR ===================== -->
-  <header class="nav" id="nav">
-    <div class="nav__inner">
-      <a href="#hero" class="nav__logo">FREECODE<span>©</span></a>
+/* ===================== TYPOGRAPHY ===================== */
+.section__title,
+.hero__title,
+.footer__title,
+.hero__sub {
+  font-family: "Anton", "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  /* делает Anton визуально жирнее */
+  -webkit-text-stroke: 1.4px currentColor;
+}
 
-      <nav class="nav__menu" id="navMenu">
-        <a href="#work">Работы</a>
-        <a href="#about">Обо мне</a>
-        <a href="#services">Услуги</a>
-      </nav>
+.hero__title { font-size: clamp(3rem, 11vw, 8rem); }
+.section__title { font-size: clamp(2.4rem, 7vw, 5.5rem); }
+.footer__title { font-size: clamp(3.5rem, 16vw, 12rem); }
 
-      <a href="#contact" class="btn btn--small">
-        Связаться
-        <span class="btn__arrow" aria-hidden="true">→</span>
-      </a>
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--gray);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.label--invert { color: var(--gray); }
 
-      <button class="nav__burger" id="navBurger" aria-label="Меню">
-        <span></span><span></span>
-      </button>
-    </div>
-  </header>
+/* ===================== SECTIONS ===================== */
+.section { padding: clamp(4rem, 12vw, 9rem) var(--pad); }
+.section--light { background: var(--white); color: var(--black); }
+.section--dark { background: var(--black); color: var(--white); }
+.section--dark .label { color: #777; }
 
-  <main>
+/* ===================== BUTTONS ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--black);
+  color: var(--white);
+  padding: 0.7rem 0.7rem 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid var(--black);
+  cursor: pointer;
+  transition: transform 0.4s var(--ease), background 0.3s, color 0.3s, border-color 0.3s;
+}
+/* чёрная кнопка → при наведении белая, текст чёрный */
+.btn:hover {
+  transform: translateY(-2px);
+  background: var(--white);
+  color: var(--black);
+}
+.btn__arrow {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  font-size: 14px;
+  transition: transform 0.4s var(--ease), background 0.3s, color 0.3s;
+}
+.btn:hover .btn__arrow { transform: translateX(3px); background: var(--black); color: var(--white); }
+.btn--small { padding: 0.5rem 0.5rem 0.5rem 1.1rem; font-size: 13px; }
+.btn--small .btn__arrow { width: 26px; height: 26px; }
 
-    <!-- ===================== HERO ===================== -->
-    <section class="hero section--light" id="hero">
-      <!-- Полупрозрачные надписи на фоне -->
-      <div class="hero__ghosts" aria-hidden="true">
-        <span class="ghost ghost--1">FREECODE</span>
-        <span class="ghost ghost--2">freecode</span>
-        <span class="ghost ghost--3">FREECODE</span>
-        <span class="ghost ghost--4">freecode</span>
-        <span class="ghost ghost--5">FREECODE</span>
-        <span class="ghost ghost--6">freecode</span>
-        <span class="ghost ghost--7">FREECODE</span>
-      </div>
+/* белая кнопка → при наведении чёрная, текст белый */
+.btn--invert { background: var(--white); color: var(--black); border-color: var(--white); }
+.btn--invert .btn__arrow { background: var(--black); color: var(--white); }
+.btn--invert:hover { background: var(--black); color: var(--white); border-color: var(--white); }
+.btn--invert:hover .btn__arrow { background: var(--white); color: var(--black); }
 
-      <div class="hero__grid">
+/* ===================== CHIPS ===================== */
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem; }
+.chip {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--black);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--black);
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.chip:hover { background: var(--black); color: var(--white); }
+.chip--active { background: var(--black); color: var(--white); }
 
-        <!-- Левая колонка -->
-        <div class="hero__col hero__col--left">
-          <div class="reveal">
-            <h1 class="hero__title">
-              <span>ДЕЛАЮ</span>
-              <span>ЦИФРОВЫЕ</span>
-              <span>ПРОДУКТЫ</span>
-            </h1>
-            <p class="hero__lead">
-              FREECODE — новая студия одного человека. Сайты, боты
-              и автоматизация для тех, кому нужен результат, а не отписка.
-            </p>
-            <a href="#contact" class="btn">
-              Начать
-              <span class="btn__arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
+/* ===================== NAVBAR ===================== */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(250, 250, 250, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  transition: transform 0.4s var(--ease);
+}
+.nav--hidden { transform: translateY(-100%); }
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem var(--pad);
+}
+.nav__logo {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+}
+.nav__logo span { color: var(--gray); margin-left: 2px; }
+.nav__menu { display: flex; gap: 2rem; }
+.nav__menu a {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+.nav__menu a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 0; height: 1px;
+  background: var(--black);
+  transition: width 0.3s var(--ease);
+}
+.nav__menu a:hover::after { width: 100%; }
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+}
+.nav__burger span {
+  width: 24px; height: 2px;
+  background: var(--black);
+  transition: transform 0.3s, opacity 0.3s;
+}
+.nav__burger.open span:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.nav__burger.open span:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
 
-          <div class="hero__about reveal">
-            <p>
-              Один разработчик. Один фокус. FREECODE — чтобы доказать,
-              что сильный продукт не требует большой студии, нужен только
-              правильный подход.
-            </p>
-            <div class="hero__social">
-              <a href="https://t.me/pidya" aria-label="Telegram" class="ico">TG</a>
-              <a href="mailto:freecode.kredit@gmail.com" aria-label="Email" class="ico">@</a>
-              <a href="https://t.me/myvfxworks" target="_blank" rel="noopener" aria-label="Канал с работами" class="ico">W</a>
-            </div>
-          </div>
-        </div>
+/* ===================== INTRO / ЗАСТАВКА ===================== */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #FAFAFA;            /* просто белый фон */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  transition: opacity 0.8s var(--ease), visibility 0.8s;
+}
+.intro.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro__stage {
+  width: min(70vw, 560px);
+  display: grid;
+  place-items: center;
+}
 
-        <!-- Центр: ч/б изображение / видео -->
-        <div class="hero__col hero__col--center reveal">
-          <div class="hero__figure">
-            <svg class="fd fd--big" viewBox="0 0 400 240" xmlns="http://www.w3.org/2000/svg" aria-label="FREECODE">
-              <text class="fd__t fd__f" x="150" y="172" text-anchor="middle">F</text>
-              <text class="fd__t fd__d" x="262" y="172" text-anchor="middle">D</text>
-            </svg>
-          </div>
-        </div>
+/* ===================== ЛОГОТИП FD (каллиграфия, рисуется) ===================== */
+.fd {
+  width: 86%;
+  max-width: 360px;
+  height: auto;
+  overflow: visible;
+  /* объём: ступенчатая «выдавленная» тень + мягкое падение */
+  --fd-depth: drop-shadow(0 2px 0 #3c3c3c) drop-shadow(0 4px 0 #262626)
+              drop-shadow(0 12px 20px rgba(0, 0, 0, 0.35));
+  filter: var(--fd-depth);
+}
+.fd--big {
+  width: 92%;
+  max-width: 440px;
+  /* 3D-наклон за курсором; углы задаёт JS через --rx/--ry */
+  --rx: 0deg;
+  --ry: 0deg;
+  transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.25s ease-out;
+  will-change: transform, filter;
+}
+.fd__t {
+  font-family: "Great Vibes", cursive;
+  font-size: 200px;
+  fill: url(#fdGloss);          /* глянцевая заливка (градиент в спрайте) */
+  fill-opacity: 0;              /* заливка проявится после отрисовки контура */
+  stroke: #0A0A0A;              /* чёрная обводка — рисуется на белом */
+  stroke-width: 1.4;
+  paint-order: stroke;
+  stroke-dasharray: 1500;
+  stroke-dashoffset: 1500;
+}
+/* Глитч при наведении: дёрганые сдвиги + RGB-расслоение, steps(1) даёт «лаганый» рывок */
+.fd--big:hover { animation: fdGlitch 0.45s steps(1) infinite; }
+@keyframes fdGlitch {
+  0%, 100% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry));
+    filter: var(--fd-depth);
+  }
+  15% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translate(-6px, 3px) skewX(4deg);
+    filter: var(--fd-depth) drop-shadow(6px 0 0 rgba(255, 0, 60, 0.65)) drop-shadow(-6px 0 0 rgba(0, 229, 255, 0.65));
+  }
+  30% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translate(5px, -2px) skewX(-3deg);
+    filter: var(--fd-depth) drop-shadow(-5px 0 0 rgba(255, 0, 60, 0.65)) drop-shadow(5px 0 0 rgba(0, 229, 255, 0.65));
+  }
+  45% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translate(-2px, -4px);
+    filter: var(--fd-depth) drop-shadow(3px 2px 0 rgba(255, 0, 60, 0.5)) drop-shadow(-3px -2px 0 rgba(0, 229, 255, 0.5));
+  }
+  60% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translate(4px, 2px) skewY(2deg);
+    filter: var(--fd-depth) drop-shadow(-4px 0 0 rgba(255, 0, 60, 0.6)) drop-shadow(4px 0 0 rgba(0, 229, 255, 0.6));
+  }
+  75% {
+    transform: perspective(700px) rotateX(var(--rx)) rotateY(var(--ry)) translate(-3px, 1px);
+    filter: var(--fd-depth);
+  }
+}
+/* сначала рисуется F, затем D */
+.fd__f { animation: fdStroke 1.6s var(--ease) 0.2s forwards, fdFill 0.9s ease 1.7s forwards; }
+.fd__d { animation: fdStroke 1.6s var(--ease) 1.7s forwards, fdFill 0.9s ease 3.2s forwards; }
+@keyframes fdStroke { to { stroke-dashoffset: 0; } }
+@keyframes fdFill { to { fill-opacity: 1; } }
+.intro__caption {
+  color: var(--gray);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+.intro__skip {
+  position: absolute;
+  bottom: clamp(1.2rem, 4vh, 2.5rem);
+  right: clamp(1.2rem, 4vw, 2.5rem);
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--gray);
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.intro__skip:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
-        <!-- Правая колонка -->
-        <div class="hero__col hero__col--right">
-          <div class="hero__block reveal">
-            <h2 class="hero__sub">СМЕЛО С<br />ПЕРВОГО ДНЯ</h2>
-            <p>
-              FREECODE не терпит «средненько». Делаю чистые, чёткие
-              решения, которые работают и приносят деньги.
-            </p>
-          </div>
-          <div class="hero__block reveal">
-            <h2 class="hero__sub">БЕЗ ГРАНИЦ<br />В ЗАДАЧАХ</h2>
-            <p>
-              Вёрстка, боты, автоматизация, интеграции, запуск под ключ.
-              Если это про цифру и про результат — я в деле.
-            </p>
-          </div>
-        </div>
-      </div>
+body.intro-lock { overflow: hidden; height: 100vh; }
 
-      <!-- Нижняя лента -->
-      <div class="hero__bar reveal">
-        <span class="bar__item"><i>●</i> FREECODE</span>
-        <span class="bar__item"><i>○</i> Вёрстка</span>
-        <span class="bar__item"><i>❚❚</i> Боты</span>
-        <span class="bar__item"><i>❚❚</i> Автоматизация</span>
-        <span class="bar__item"><i>●●</i> Интеграции</span>
-        <span class="bar__item"><i>//</i> Запуск</span>
-      </div>
-    </section>
+/* ===================== ЛАЙТБОКС ===================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(5, 5, 5, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+  cursor: zoom-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s var(--ease), visibility 0.45s;
+}
+.lightbox.is-open { opacity: 1; visibility: visible; }
 
-    <!-- ===================== MARQUEE ===================== -->
-    <section class="marquee section--dark" aria-hidden="true">
-      <div class="marquee__track">
-        <span>ВЁРСТКА · БОТЫ · АВТОМАТИЗАЦИЯ · ИНТЕГРАЦИИ · ДИЗАЙН · SEO · ЛЕНДИНГИ · </span>
-        <span>ВЁРСТКА · БОТЫ · АВТОМАТИЗАЦИЯ · ИНТЕГРАЦИИ · ДИЗАЙН · SEO · ЛЕНДИНГИ · </span>
-      </div>
-    </section>
+/* блок-рамка вокруг видео (под размер ролика) */
+.lightbox__frame {
+  position: relative;
+  display: inline-flex;
+  max-width: 90vw;
+  max-height: 86vh;
+  transform-origin: center center;
+  /* плавно вырастает из центра, увеличиваясь */
+  opacity: 0;
+  transform: scale(0.35);
+  transition: transform 0.8s var(--ease), opacity 0.5s var(--ease);
+}
+.lightbox.is-open .lightbox__frame { opacity: 1; transform: scale(1); }
+.lightbox__video {
+  display: block;
+  max-width: 90vw;
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.7);
+}
+/* крестик на самом видео — справа сверху */
+.lightbox__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(250, 250, 250, 0.92);
+  color: var(--black);
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(4px);
+  transition: transform 0.25s var(--ease), background 0.2s;
+}
+.lightbox__close:hover { transform: rotate(90deg); background: var(--white); }
 
-    <!-- ===================== WORK ===================== -->
-    <section class="work section section--light" id="work">
-      <div class="work__head reveal">
-        <p class="label">Избранные проекты</p>
-        <h2 class="section__title reveal-loop">
-          WORK THAT<br />EARNS ITS PLACE
-        </h2>
+/* подсказка на карточках */
+.card .media { cursor: zoom-in; }
 
-        <div class="chips" id="chips">
-          <button class="chip chip--active" data-filter="all">Все</button>
-          <button class="chip" data-filter="service">Сервисы</button>
-          <button class="chip" data-filter="site">Сайты</button>
-        </div>
-      </div>
+/* ===================== HERO (Ken-style) ===================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6.5rem, 12vw, 9rem) var(--pad) clamp(1.5rem, 3vw, 2.5rem);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-      <div class="grid" id="workGrid">
-        <!-- CryptoPay — приём оплаты криптой на любом сайте -->
-        <a href="#" class="card reveal" data-cat="service">
-          <div class="media media--card">
-            <svg class="vidph"><use href="#vidph" /></svg>
-            <video class="vid" muted loop playsinline preload="metadata">
-              <source src="assets/cryptopay.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div class="card__meta">
-            <h3 class="card__title">CryptoPay</h3>
-            <span class="card__tag">Приём оплаты криптой</span>
-          </div>
-        </a>
+/* полупрозрачные надписи на фоне */
+.hero__ghosts { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.ghost {
+  position: absolute;
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.04);
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  user-select: none;
+}
+.ghost--1 { top: 4%;  left: 26%; font-size: clamp(4rem, 11vw, 11rem); transform: rotate(-4deg); }
+.ghost--2 { top: 34%; left: 48%; font-size: clamp(2rem, 5vw, 4rem); color: rgba(10,10,10,0.05); transform: rotate(6deg); }
+.ghost--3 { top: 58%; left: 14%; font-size: clamp(3rem, 8vw, 8rem); color: rgba(10,10,10,0.035); }
+.ghost--4 { top: 70%; left: 55%; font-size: clamp(2.5rem, 6vw, 5rem); transform: rotate(-8deg); }
+.ghost--5 { top: 12%; left: 60%; font-size: clamp(2.5rem, 6vw, 6rem); color: rgba(10,10,10,0.03); transform: rotate(3deg); }
+.ghost--6 { top: 46%; left: 4%;  font-size: clamp(2rem, 5vw, 4.5rem); color: rgba(10,10,10,0.05); transform: rotate(-3deg); }
+.ghost--7 { top: 84%; left: 32%; font-size: clamp(2.5rem, 7vw, 7rem); color: rgba(10,10,10,0.03); transform: rotate(4deg); }
 
-        <!-- TrainMail — почтовый сервис -->
-        <a href="https://trainmail.online" target="_blank" rel="noopener" class="card reveal" data-cat="service">
-          <div class="media media--card">
-            <svg class="vidph"><use href="#vidph" /></svg>
-            <video class="vid" muted loop playsinline preload="metadata">
-              <source src="assets/trainmail.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div class="card__meta">
-            <h3 class="card__title">TrainMail</h3>
-            <span class="card__tag">Почтовый сервис · trainmail.online</span>
-          </div>
-        </a>
+/* контент над фоном */
+.hero__grid, .hero__bar { position: relative; z-index: 1; }
 
-        <!-- DinoStory -->
-        <a href="#" class="card reveal" data-cat="site">
-          <div class="media media--card">
-            <svg class="vidph"><use href="#vidph" /></svg>
-            <video class="vid" muted loop playsinline preload="metadata">
-              <source src="assets/dinostory.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div class="card__meta">
-            <h3 class="card__title">DinoStory</h3>
-            <span class="card__tag">Веб-проект</span>
-          </div>
-        </a>
+.hero__grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: stretch;
+}
+.hero__col { display: flex; flex-direction: column; }
+.hero__col--left { justify-content: space-between; }
+.hero__col--right { justify-content: space-between; text-align: right; align-items: flex-end; gap: 2rem; }
+.hero__col--center { justify-content: center; }
 
-        <!-- Fanmade -->
-        <a href="#" class="card reveal" data-cat="site">
-          <div class="media media--card">
-            <svg class="vidph"><use href="#vidph" /></svg>
-            <video class="vid" muted loop playsinline preload="metadata">
-              <source src="assets/fanmade.mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div class="card__meta">
-            <h3 class="card__title">Fanmade</h3>
-            <span class="card__tag">Веб-проект</span>
-          </div>
-        </a>
-      </div>
+/* «ломаный» заголовок */
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(2.6rem, 6vw, 5rem);
+}
+.hero__title span { display: block; }
+.hero__title span:nth-child(1) { margin-left: 0; }
+.hero__title span:nth-child(2) { margin-left: 0.6em; margin-top: -0.12em; }
+.hero__title span:nth-child(3) { margin-left: 0.2em; margin-top: -0.12em; letter-spacing: -0.02em; }
 
-      <div class="work__more reveal">
-        <a href="https://t.me/myvfxworks" target="_blank" rel="noopener" class="btn">
-          Все работы в Telegram
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </section>
+.hero__lead { max-width: 40ch; color: #333; margin: 1.6rem 0; font-size: 16.5px; line-height: 1.6; }
 
-    <!-- ===================== ABOUT (dark) ===================== -->
-    <section class="about section section--dark" id="about">
-      <div class="about__grid">
-        <!-- Левая колонка: текст -->
-        <div class="about__left reveal">
-          <p class="label label--invert">Обо мне</p>
-          <h2 class="section__title reveal-loop">
-            КОД, КОТОРЫЙ<br />РАБОТАЕТ
-          </h2>
-          <div class="about__text">
-            <p>
-              FREECODE - фронтенд- и бэкенд-разработчик. В разработке больше
-              5 лет: начинал с простых сайтов и скриптов, сегодня делаю
-              полноценные продукты под ключ - от первой строчки кода
-              до запуска.
-            </p>
-            <p>
-              Работаю на обеих сторонах: собираю интерфейсы, которые приятно
-              открывать, и пишу серверную логику, которая не падает под
-              нагрузкой. Отдельная специализация — Telegram-боты: приём
-              заказов, записи клиентов, оплата, рассылки, интеграции
-              с таблицами и CRM. Если процесс можно автоматизировать -
-              я соберу для него бота.
-            </p>
-            <p>
-              Не люблю раздутые сроки и мутные сметы. Формат простой:
-              вы описываете задачу - я называю срок и цену - вы получаете
-              работающий продукт. Все проекты сопровождаю после сдачи:
-              если что-то сломалось или нужно доработать, я на связи.
-            </p>
-          </div>
-          <p class="about__stack">
-            <span>Стек</span> HTML/CSS/JS, React, Python, Node.js,
-            Telegram Bot API, базы данных, деплой и настройка серверов.
-          </p>
-          <div class="chips chips--invert">
-            <span class="chip">Frontend</span>
-            <span class="chip">Backend</span>
-            <span class="chip">Telegram-боты</span>
-            <span class="chip">Автоматизация</span>
-            <span class="chip">Сайты под ключ</span>
-          </div>
-        </div>
+.hero__about { max-width: 38ch; }
+.hero__about p { color: #555; font-size: 15px; margin-bottom: 1.2rem; line-height: 1.6; }
+.hero__social { display: flex; gap: 0.6rem; }
+.ico {
+  display: grid; place-items: center;
+  width: 38px; height: 38px;
+  border: 1px solid var(--black);
+  border-radius: 50%;
+  font-size: 13px; font-weight: 600;
+  transition: background 0.25s, color 0.25s;
+}
+.ico:hover { background: var(--black); color: var(--white); }
 
-        <!-- Правая колонка: видео -->
-        <div class="about__right reveal">
-          <div class="media about__media">
-            <svg class="vidph"><use href="#vidph" /></svg>
-            <video class="vid" muted loop playsinline autoplay preload="auto">
-              <source src="assets/kenly.mp4" type="video/mp4" />
-            </video>
-          </div>
-        </div>
-      </div>
+.hero__figure {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 50vh;
+}
 
-      <!-- Полупрозрачный водяной знак -->
-      <div class="about__watermark" aria-hidden="true">#FREECODE</div>
+.hero__block { max-width: 34ch; }
+.hero__sub {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(1.9rem, 3.1vw, 2.9rem);
+  line-height: 0.92;
+  margin-bottom: 1rem;
+}
+.hero__block p { color: #555; font-size: 16px; line-height: 1.6; }
 
-      <!-- Цифры + кнопка -->
-      <div class="about__foot reveal">
-        <ul class="about__stats">
-          <li><strong>5+</strong><span>лет опыта</span></li>
-          <li><strong>2</strong><span>стека: фронт + бэк</span></li>
-          <li><strong>∞</strong><span>ботов любой сложности</span></li>
-        </ul>
-        <a href="#contact" class="btn btn--invert">
-          Обсудить проект
-          <span class="btn__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </section>
+/* нижняя лента */
+.hero__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.8rem clamp(1.2rem, 3vw, 2rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 13px;
+  font-weight: 500;
+}
+.bar__item i { font-style: normal; font-size: 10px; color: var(--gray); letter-spacing: -1px; }
 
-    <!-- ===================== SERVICES ===================== -->
-    <section class="services section section--light" id="services">
-      <div class="services__head reveal">
-        <p class="label">Что я делаю</p>
-        <h2 class="section__title reveal-loop">УСЛУГИ<br />И ЦЕНЫ</h2>
-      </div>
+/* медиа-обёртки */
+.media {
+  position: relative;
+  overflow: hidden;
+  background: #e9e9e9;
+  color: #9a9a9a;            /* цвет SVG-плейсхолдера на светлом */
+}
+.section--dark .media {
+  background: #141414;
+  color: rgba(250, 250, 250, 0.4);
+}
+.media img, .media video { transition: transform 0.7s var(--ease); }
+.media--tall { aspect-ratio: 3 / 4; }
+.media--card { aspect-ratio: 4 / 3; }
 
-      <ul class="services__list">
-        <li class="srv reveal">
-          <div class="srv__top">
-            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
-                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="16" rx="2" />
-              <path d="M3 8h18" />
-              <path d="M6 6h.01M8.5 6h.01" />
-            </svg>
-            <span class="srv__num">01</span>
-          </div>
-          <h3 class="srv__name">Сайты и лендинги</h3>
-          <p class="srv__desc">Адаптивная вёрстка, скорость, чистый код</p>
-          <span class="srv__price">от 25 000 ₽</span>
-        </li>
+/* SVG-плейсхолдер видео-бокса */
+.vidph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+/* Само видео поверх плейсхолдера. Нет файла → прозрачно, виден SVG */
+.media .vid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.02);
+  background: transparent;
+}
 
-        <li class="srv reveal">
-          <div class="srv__top">
-            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
-                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="4" y="8" width="16" height="11" rx="2.5" />
-              <path d="M12 8V4" />
-              <circle cx="12" cy="3" r="1" />
-              <path d="M9 13h.01M15 13h.01" />
-            </svg>
-            <span class="srv__num">02</span>
-          </div>
-          <h3 class="srv__name">Телеграм-боты</h3>
-          <p class="srv__desc">Приём заявок, оплаты, рассылки, CRM</p>
-          <span class="srv__price">от 20 000 ₽</span>
-        </li>
+/* ===================== MARQUEE ===================== */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--line-invert);
+  border-bottom: 1px solid var(--line-invert);
+}
+.marquee__track {
+  display: inline-flex;
+  animation: scroll 28s linear infinite;
+}
+.marquee__track span {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  padding-right: 1rem;
+  color: var(--white);
+}
+@keyframes scroll {
+  to { transform: translateX(-50%); }
+}
 
-        <li class="srv reveal">
-          <div class="srv__top">
-            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
-                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
-            </svg>
-            <span class="srv__num">03</span>
-          </div>
-          <h3 class="srv__name">Автоматизация</h3>
-          <p class="srv__desc">Интеграции, парсеры, отчёты, API</p>
-          <span class="srv__price">от 15 000 ₽</span>
-        </li>
+/* ===================== WORK ===================== */
+.work__head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.work__more { display: flex; justify-content: center; margin-top: clamp(2rem, 4vw, 3.5rem); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
+.card { display: block; }
+.card:hover .media img,
+.card:hover .media video { transform: scale(1.06); }
+.card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+}
+.card__title { font-size: 18px; font-weight: 600; }
+.card__tag { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray); white-space: nowrap; }
+.card.is-hidden { display: none; }
 
-        <li class="srv reveal">
-          <div class="srv__top">
-            <svg class="srv__icon" viewBox="0 0 24 24" stroke="currentColor" fill="none"
-                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12a8 8 0 0 1 13-6.2" />
-              <path d="M18 4v3h-3" />
-              <path d="M20 12a8 8 0 0 1-13 6.2" />
-              <path d="M6 20v-3h3" />
-            </svg>
-            <span class="srv__num">04</span>
-          </div>
-          <h3 class="srv__name">Поддержка</h3>
-          <p class="srv__desc">Доработки, хостинг, обновления</p>
-          <span class="srv__price">от 5 000 ₽/мес</span>
-        </li>
-      </ul>
-    </section>
+/* ===================== ABOUT ===================== */
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+.about__text { margin: 1.8rem 0 0; max-width: 56ch; }
+.about__text p { color: #c4c4c4; font-size: 17px; line-height: 1.65; margin-bottom: 1.1rem; }
+.about__stack { color: #999; font-size: 15px; max-width: 56ch; margin-top: 1.4rem; }
+.about__stack span {
+  display: inline-block;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 11px;
+  margin-right: 0.6rem;
+}
+.about__media { aspect-ratio: 16 / 11; width: 100%; align-self: start; position: sticky; top: 90px; }
 
-    <!-- ===================== FOOTER / CONTACT (dark) ===================== -->
-    <footer class="footer section--dark" id="contact">
-      <div class="footer__inner">
-        <p class="label label--invert reveal">Свяжитесь со мной</p>
-        <h2 class="footer__title reveal-loop">ДАВАЙ<br />РАБОТАТЬ</h2>
+/* Водяной знак #FREECODE */
+.about__watermark {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(3.5rem, 17vw, 14rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: rgba(250, 250, 250, 0.06);
+  margin: clamp(2.5rem, 6vw, 4.5rem) 0 0;
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
 
-        <div class="footer__row reveal">
-          <a href="https://t.me/pidya" class="btn btn--invert">
-            Telegram
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-          <a href="mailto:freecode.kredit@gmail.com" class="btn btn--invert">
-            Email
-            <span class="btn__arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
+/* outline-чипы на тёмном фоне */
+.chips--invert { margin-top: 1.8rem; }
+.chips--invert .chip {
+  border-color: rgba(250, 250, 250, 0.35);
+  color: var(--white);
+  cursor: default;
+}
+.chips--invert .chip:hover { background: var(--white); color: var(--black); border-color: var(--white); }
 
-        <div class="footer__bottom">
-          <div class="footer__contacts">
-            <a href="mailto:freecode.kredit@gmail.com">freecode.kredit@gmail.com</a>
-            <a href="https://t.me/pidya">@pidya</a>
-            <a href="https://t.me/myvfxworks" target="_blank" rel="noopener">@myvfxworks · работы</a>
-          </div>
-          <div class="footer__social">
-            <a href="https://t.me/pidya">TG</a>
-            <a href="https://t.me/myvfxworks" target="_blank" rel="noopener">Works</a>
-          </div>
-        </div>
+/* цифры + кнопка */
+.about__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--line-invert);
+}
+.about__stats { display: flex; gap: clamp(2rem, 4vw, 3.5rem); flex-wrap: wrap; }
+.about__stats li { display: flex; flex-direction: column; max-width: 15ch; }
+.about__stats strong {
+  font-family: "Anton", sans-serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  line-height: 1;
+}
+.about__stats span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--gray);
+  margin-top: 0.5rem;
+}
 
-        <p class="footer__copy">© 2026 FREECODE. Все права защищены.</p>
-      </div>
-    </footer>
+/* ===================== SERVICES ===================== */
+.services__head { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.services__list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+.srv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--white);
+  transition: transform 0.55s var(--ease), border-color 0.35s, box-shadow 0.55s;
+}
+/* .reveal.is-visible ставит transform:none — повышаем специфичность, чтобы scale сработал */
+.srv.reveal:hover,
+.srv:hover {
+  transform: scale(1.06);
+  z-index: 2;
+  border-color: var(--black);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.09);
+}
+.srv__top { display: flex; align-items: center; justify-content: space-between; }
+.srv__icon {
+  width: 42px;
+  height: 42px;
+  color: var(--black);
+  transition: transform 0.45s var(--ease);
+}
+.srv:hover .srv__icon { transform: scale(1.1) rotate(-4deg); }
+.srv__num { font-family: "Anton", sans-serif; font-size: 1.1rem; color: var(--gray); }
+.srv__name { font-size: clamp(1.15rem, 2vw, 1.4rem); font-weight: 600; }
+.srv__desc { font-size: 14px; color: var(--gray); flex: 1; }
+.srv__price {
+  font-family: "Anton", sans-serif;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  white-space: nowrap;
+  margin-top: 0.4rem;
+}
 
-  </main>
+/* ===================== FOOTER ===================== */
+.footer { padding: clamp(4rem, 10vw, 8rem) var(--pad) 2.5rem; }
+.footer__title { margin: 0.5rem 0 2.5rem; }
+.footer__row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: clamp(3rem, 8vw, 6rem); }
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line-invert);
+}
+.footer__contacts, .footer__social { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.footer__contacts a, .footer__social a { font-size: 14px; transition: color 0.25s; }
+.footer__contacts a:hover, .footer__social a:hover { color: var(--gray); }
+.footer__copy { margin-top: 2.5rem; font-size: 12px; color: var(--gray); }
 
-  <!-- ===================== ЛАЙТБОКС: видео почти на весь экран ===================== -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox__frame">
-      <button class="lightbox__close" id="lightboxClose" aria-label="Закрыть">✕</button>
-      <video class="lightbox__video" id="lightboxVideo" loop muted playsinline></video>
-    </div>
-  </div>
+/* ===================== REVEAL ANIMATION ===================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
 
-  <script src="script.js"></script>
-</body>
-</html>
+/* жирные заголовки — по центру + появляются при скролле вниз, прячутся при скролле вверх */
+.section__title,
+.footer__title { text-align: center; }
+.reveal-loop {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal-loop.is-in { opacity: 1; transform: none; }
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 980px) {
+  .hero { min-height: auto; }
+  .hero__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero__col--center { order: -1; }
+  .hero__col--right { text-align: left; align-items: flex-start; }
+  .hero__col--right { flex-direction: row; flex-wrap: wrap; gap: 2rem; }
+  .hero__block { flex: 1 1 240px; }
+  .hero__figure { min-height: 48vh; }
+  .hero__title { font-size: clamp(2.6rem, 12vw, 5rem); }
+  .hero__bar { gap: 0.6rem 1rem; justify-content: flex-start; border-radius: 20px; }
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .about__grid { grid-template-columns: 1fr; }
+  .nav__menu {
+    position: fixed;
+    inset: 0 0 auto 0;
+    top: 100%;
+    flex-direction: column;
+    background: var(--white);
+    padding: 2rem var(--pad);
+    gap: 1.5rem;
+    border-bottom: 1px solid var(--line);
+    transform: translateY(-120%);
+    transition: transform 0.4s var(--ease);
+    z-index: -1;
+  }
+  .nav__menu.open { transform: translateY(0); }
+  .nav__burger { display: flex; }
+  .nav .btn--small { display: none; }
+}
+
+@media (max-width: 600px) {
+  .intro__stage { width: 90vw; }
+  .intro__caption { font-size: 12px; margin: 0 1rem; }
+  .grid { grid-template-columns: 1fr; }
+  .services__list { grid-template-columns: 1fr; }
+  .about__stats { gap: 1.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal-loop { opacity: 1; transform: none; transition: none; }
+  .fd__t { fill-opacity: 1; stroke-dashoffset: 0; }
+  html { scroll-behavior: auto; }
+}
