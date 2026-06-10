@@ -202,24 +202,3 @@ if (canHover) {
   box.addEventListener("click", close); // клик в любом месте закрывает
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
 })();
-
-// ===================== 3D-НАКЛОН ЛОГО FD ЗА КУРСОРОМ =====================
-// Лого в hero наклоняется за мышкой (углы пишутся в --rx/--ry,
-// CSS собирает из них transform). Только для устройств с курсором.
-(function fdTilt() {
-  const fd = document.querySelector(".fd--big");
-  if (!fd || !canHover) return;
-  const zone = fd.closest(".hero__figure") || fd;
-
-  zone.addEventListener("mousemove", (e) => {
-    const r = zone.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - 0.5;  // -0.5 … 0.5
-    const y = (e.clientY - r.top) / r.height - 0.5;
-    fd.style.setProperty("--ry", (x * 24).toFixed(1) + "deg");
-    fd.style.setProperty("--rx", (-y * 18).toFixed(1) + "deg");
-  });
-  zone.addEventListener("mouseleave", () => {
-    fd.style.setProperty("--rx", "0deg");
-    fd.style.setProperty("--ry", "0deg");
-  });
-})();
